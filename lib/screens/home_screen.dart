@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:nex_lab/models/bookedtest.dart';
 import 'package:nex_lab/models/test_report.dart';
 import 'package:nex_lab/screens/inhome_screens/bookedtests_screen.dart';
 import 'package:nex_lab/screens/inhome_screens/tests_sceen.dart';
 import 'package:nex_lab/screens/result_screen.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
-  
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -18,7 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   int _currentSwappableIndex = 0;
   List<BookedTest> bookedTests = [];
-  List<TestReport> testReports = []; 
+  List<TestReport> testReports = [];
+
   void _bookTest(BookedTest bookedTest) {
     setState(() {
       if (!bookedTests.any((test) => test.name == bookedTest.name)) {
@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
+
   Widget _buildSwappableRow() {
     final titles = ['Tests', 'Booked Tests'];
     return Row(
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.blue.shade50,
         title: Image.asset('Assets/Nexlab logo.png', width: 189, height: 33, fit: BoxFit.contain),
-        actions: [Icon(Icons.notifications, color: Colors.black, size: 40)],
+        actions: [Icon(Icons.circle_notifications, color: Colors.black, size: 40)],
         centerTitle: true,
         elevation: 0,
       ),
@@ -103,21 +104,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             )
-            : ResultsScreen(testReports: testReports), // Show ResultsScreen when selected
-
-            bottomNavigationBar: BottomNavigationBar(
-              fixedColor: Colors.blue,
-              unselectedItemColor: Colors.blue,
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Results'),
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-              ],
-              currentIndex: _selectedIndex,
-              onTap: ( index) => setState(() {
-                _selectedIndex = index;
-              }),
-            ),
-          );
-        }
-      }
+          : (_selectedIndex == 0
+              ? ResultsScreen(testReports: testReports)
+              : Center(child: Text('Profile Screen'))), // Placeholder for Profile screen
+      bottomNavigationBar: BottomNavigationBar(
+        fixedColor: Colors.blue,
+        unselectedItemColor: Colors.blue,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Results'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (index) => setState(() {
+          _selectedIndex = index;
+        }),
+      ),
+    );
+  }
+}

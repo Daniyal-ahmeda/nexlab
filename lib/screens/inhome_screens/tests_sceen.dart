@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nex_lab/models/bookedtest.dart';
 import 'package:nex_lab/screens/details_screen.dart';
-import 'package:nex_lab/screens/inhome_screens/bookedtests_screen.dart';
 
 class Tests_Screen extends StatelessWidget {
   final Function(BookedTest) onTestBooked;

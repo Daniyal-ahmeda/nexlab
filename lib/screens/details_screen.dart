@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class TestDetailsScreen extends StatelessWidget {
   final String testName;
-
   const TestDetailsScreen({super.key, required this.testName});
 
   @override
@@ -12,7 +11,6 @@ class TestDetailsScreen extends StatelessWidget {
         title: Text(testName),
         backgroundColor: Colors.blue.shade50,
       ),
-      
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
@@ -25,11 +23,10 @@ class TestDetailsScreen extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.2),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: Offset(0, 3),
               ),
             ],
           ),
-          
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -48,13 +45,11 @@ class TestDetailsScreen extends StatelessWidget {
                 'It will tell the current values of your $testName \n'
                 'What the results mean\n'
                 'Any preparation needed before the test\n',
-                style: TextStyle(fontSize: 16,),
+                style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  
-                  // Handle confirmation action here
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -63,14 +58,13 @@ class TestDetailsScreen extends StatelessWidget {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pop(); // Close the dialog
+                            Navigator.of(context).pop();
                           },
                           child: Text('Cancel'),
                         ),
                         TextButton(
                           onPressed: () {
-                            // Add your confirmation logic here
-                            Navigator.of(context).pop(); // Close the dialog
+                            Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('You have confirmed to take the $testName test.')),
                             );
@@ -81,7 +75,6 @@ class TestDetailsScreen extends StatelessWidget {
                     ),
                   );
                 },
-                
                 child: Text('Confirm Test'),
               ),
             ],

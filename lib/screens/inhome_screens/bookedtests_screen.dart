@@ -1,14 +1,10 @@
 // booked_tests_screen.dart
 import 'package:flutter/material.dart';
+import 'package:nex_lab/models/bookedtest.dart';
 import 'package:nex_lab/screens/details_screen.dart';
  // Import the BookedTest class
 
-class BookedTest {
-  final String name;
-  final DateTime dateTime;
 
-  BookedTest({required this.name, required this.dateTime});
-}
 // booked_tests_screen.dart
 
 class BookedTestsScreen extends StatelessWidget {
@@ -21,12 +17,13 @@ class BookedTestsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(' Booked Tests'),
-        backgroundColor: Colors.blue.shade50,
+        backgroundColor: Colors.blue.shade100,
       ),
       body: ListView.builder(
         itemCount: bookedTests.length,
         itemBuilder: (context, index) {
           return Card(
+            color: Colors.blue.shade50,
             margin: EdgeInsets.all(8.0),
             child: ListTile(
               title: Text(bookedTests[index].name),
