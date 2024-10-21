@@ -44,11 +44,11 @@ class TestDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                '- Purpose of the test:\n '
-                '- It will tell the current values of your $testName \n'
-                '- What the results mean\n'
-                '- Any preparation needed before the test\n',
-                style: TextStyle(fontSize: 16),
+                'Purpose of the test:\n '
+                'It will tell the current values of your $testName \n'
+                'What the results mean\n'
+                'Any preparation needed before the test\n',
+                style: TextStyle(fontSize: 16,),
               ),
               SizedBox(height: 20),
               ElevatedButton(

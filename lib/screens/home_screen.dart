@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nex_lab/models/test_report.dart';
 import 'package:nex_lab/screens/inhome_screens/bookedtests_screen.dart';
 import 'package:nex_lab/screens/inhome_screens/tests_sceen.dart';
+import 'package:nex_lab/screens/result_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,7 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+  
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -15,15 +18,20 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   int _currentSwappableIndex = 0;
   List<BookedTest> bookedTests = [];
-
+  List<TestReport> testReports = []; 
   void _bookTest(BookedTest bookedTest) {
     setState(() {
       if (!bookedTests.any((test) => test.name == bookedTest.name)) {
         bookedTests.add(bookedTest);
+        // Add a test report for demonstration purposes
+        testReports.add(TestReport(
+          testName: bookedTest.name,
+          date: bookedTest.dateTime,
+          result: "Positive", // Example result
+        ));
       }
     });
   }
-
   Widget _buildSwappableRow() {
     final titles = ['Tests', 'Booked Tests'];
     return Row(
@@ -80,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: _selectedIndex == 0
+      body: _selectedIndex == 1
           ? Column(
               children: [
                 _buildSwappableRow(),
@@ -95,23 +103,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             )
-          : Center(child: Text("Blank")),
-      bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.blue,
-        unselectedItemColor: Colors.blue,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: (index) => setState(() {
-          _selectedIndex = index;
-          _currentSwappableIndex = 0;
-        }),
-      ),
-    );
-  }
-}
+            : ResultsScreen(testReports: testReports), // Show ResultsScreen when selected
+
+            bottomNavigationBar: BottomNavigationBar(
+              fixedColor: Colors.blue,
+              unselectedItemColor: Colors.blue,
+              items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Results'),
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+              ],
+              currentIndex: _selectedIndex,
+              onTap: ( index) => setState(() {
+                _selectedIndex = index;
+              }),
+            ),
+          );
+        }
+      }
