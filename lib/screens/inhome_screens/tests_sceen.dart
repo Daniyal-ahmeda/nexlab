@@ -1,9 +1,12 @@
-// test.dart
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nex_lab/screens/details_screen.dart';
+import 'package:nex_lab/screens/inhome_screens/bookedtests_screen.dart';
 
 class Tests_Screen extends StatelessWidget {
+  final Function(BookedTest) onTestBooked;
+  Tests_Screen({super.key, required this.onTestBooked});
+
   final List<IconData> iconDataList = [
     FontAwesomeIcons.solidHeart,
     FontAwesomeIcons.heartPulse,
@@ -38,27 +41,70 @@ class Tests_Screen extends StatelessWidget {
     'Allergies',
   ];
 
+  final List<Color> colorList = [
+    Colors.red.withOpacity(0.5),
+    Colors.pink.withOpacity(0.5),
+    Colors.green.withOpacity(0.5),
+    Colors.teal.withOpacity(0.5),
+    Colors.blue.withOpacity(0.5),
+    Colors.purple.withOpacity(0.5),
+    Colors.orange.withOpacity(0.5),
+    Colors.brown.withOpacity(0.5),
+    Colors.cyan.withOpacity(0.5),
+    Colors.yellow.withOpacity(0.5),
+    Colors.deepPurple.withOpacity(0.5),
+    Colors.lime.withOpacity(0.5),
+    Colors.indigo.withOpacity(0.5),
+    Colors.amber.withOpacity(0.5),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // Number of items in a row
-        childAspectRatio: 3 / 2, // Aspect ratio of each item
+        crossAxisCount: 2,
+        childAspectRatio: 3 / 2,
       ),
       itemCount: iconDataList.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TestDetailsScreen(testName: textList[index])),
+          onTap: () async {
+            DateTime? selectedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime(2100),
             );
+            if (selectedDate != null) {
+              TimeOfDay? selectedTime = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+              );
+              if (selectedTime != null) {
+                final bookedTest = BookedTest(
+                  name: textList[index],
+                  dateTime: DateTime(
+                    selectedDate.year,
+                    selectedDate.month,
+                    selectedDate.day,
+                    selectedTime.hour,
+                    selectedTime.minute,
+                  ),
+                );
+                onTestBooked(bookedTest);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TestDetailsScreen(testName: textList[index])),
+                );
+              }
+            }
           },
           child: Card(
+            color: Colors.blue.shade50,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FaIcon(iconDataList[index], size: 50),
+                FaIcon(iconDataList[index], size: 50, color: colorList[index]),
                 SizedBox(height: 8),
                 Text(textList[index]),
               ],
