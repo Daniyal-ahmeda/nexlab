@@ -1,23 +1,17 @@
-// booked_tests_screen.dart
 import 'package:flutter/material.dart';
 import 'package:nex_lab/models/bookedtest.dart';
 import 'package:nex_lab/screens/details_screen.dart';
- // Import the BookedTest class
 
-
-// booked_tests_screen.dart
 
 class BookedTestsScreen extends StatelessWidget {
-  final List<BookedTest> bookedTests; // Receive the booked tests
-
+  final List<BookedTest> bookedTests; 
   const BookedTestsScreen({super.key, required this.bookedTests});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(' Booked Tests'),
-        backgroundColor: Colors.blue.shade100,
+        backgroundColor: Colors.blue.shade50,
       ),
       body: ListView.builder(
         itemCount: bookedTests.length,
@@ -32,12 +26,10 @@ class BookedTestsScreen extends StatelessWidget {
               ),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
-                // Handle tap on the booked test item
-                // You can navigate to a details screen or show more information
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TestDetailsScreen(testName: bookedTests[index].name),
+                    builder: (context) => TestDetailsScreen(testName: bookedTests[index].name, key: null, onTestBooked: (BookedTest ) {  }, testDetails: [],),
                   ),
                 );
               },

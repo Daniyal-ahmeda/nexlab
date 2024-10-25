@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nex_lab/screens/testconfirmation_screen.dart';
+import '../models/bookedtest.dart';
 
 class TestDetailsScreen extends StatelessWidget {
   final String testName;
-  const TestDetailsScreen({super.key, required this.testName});
+  final List<String> testDetails;
+  final Function(BookedTest) onTestBooked;
+
+  const TestDetailsScreen({required this.testName, required this.testDetails, required this.onTestBooked, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,75 +16,31 @@ class TestDetailsScreen extends StatelessWidget {
         title: Text(testName),
         backgroundColor: Colors.blue.shade50,
       ),
-      body: Padding(
+      body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(8.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
+        itemCount: testDetails.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: EdgeInsets.only(bottom: 16.0),
+            child: ListTile(
+              title: Text(
+                testDetails[index],
+                style: TextStyle(fontSize: 18),
               ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Details for $testName',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Here are the details of this test',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Purpose of the test:\n '
-                'It will tell the current values of your $testName \n'
-                'What the results mean\n'
-                'Any preparation needed before the test\n',
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text('Confirmation'),
-                      content: Text('Are you sure you want to take the $testName test?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('You have confirmed to take the $testName test.')),
-                            );
-                          },
-                          child: Text('Confirm'),
-                        ),
-                      ],
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TestConfirmationScreen(
+                      testName: testDetails[index],
+                      onTestBooked: onTestBooked,
                     ),
-                  );
-                },
-                child: Text('Confirm Test'),
-              ),
-            ],
-          ),
-        ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }

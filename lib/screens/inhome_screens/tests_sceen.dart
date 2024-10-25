@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nex_lab/models/bookedtest.dart';
 import 'package:nex_lab/screens/details_screen.dart';
 
+
 class Tests_Screen extends StatelessWidget {
   final Function(BookedTest) onTestBooked;
   Tests_Screen({super.key, required this.onTestBooked});
@@ -41,6 +42,23 @@ class Tests_Screen extends StatelessWidget {
     'Allergies',
   ];
 
+  final List<List<String>> testDetailsList = [
+    ['ECG', 'Echo', 'Stress Test'],
+    ['Pulse Oximetry', 'ABG'],
+    ['Cannabis Test', 'Opioids Test'],
+    ['Chest X-Ray', 'Lung Function Test'],
+    ['CT Scan', 'MRI'],
+    ['PCR', 'Antigen Test'],
+    ['Cardiac MRI', 'Cardiac CT'],
+    ['Microscopic Analysis'],
+    ['Genetic Test', 'Ancestry Test'],
+    ['Prescription Medications'],
+    ['Vaccinations', 'Flu Shot'],
+    ['COVID-19 Test', 'Antibody Test'],
+    ['Fever Check'],
+    ['Allergy Skin Test', 'IgE Blood Test'],
+  ];
+
   final List<Color> colorList = [
     Colors.red.withOpacity(0.5),
     Colors.pink.withOpacity(0.5),
@@ -68,36 +86,17 @@ class Tests_Screen extends StatelessWidget {
       itemCount: iconDataList.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () async {
-            DateTime? selectedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now(),
-              lastDate: DateTime(2100),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TestDetailsScreen(
+                  testName: textList[index],
+                  testDetails: testDetailsList[index],
+                  onTestBooked: onTestBooked,
+                ),
+              ),
             );
-            if (selectedDate != null) {
-              TimeOfDay? selectedTime = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.now(),
-              );
-              if (selectedTime != null) {
-                final bookedTest = BookedTest(
-                  name: textList[index],
-                  dateTime: DateTime(
-                    selectedDate.year,
-                    selectedDate.month,
-                    selectedDate.day,
-                    selectedTime.hour,
-                    selectedTime.minute,
-                  ),
-                );
-                onTestBooked(bookedTest);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TestDetailsScreen(testName: textList[index])),
-                );
-              }
-            }
           },
           child: Card(
             color: Colors.blue.shade50,
