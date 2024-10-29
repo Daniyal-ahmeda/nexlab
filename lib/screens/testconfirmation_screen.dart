@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nex_lab/models/bookedtest.dart';
+import 'package:nex_lab/screens/payment/payment_screen.dart';
 
 class TestConfirmationScreen extends StatefulWidget {
   final String testName;
@@ -28,6 +29,12 @@ class _TestConfirmationScreenState extends State<TestConfirmationScreen> {
         ));
         Navigator.of(context).popUntil((route) => route.isFirst);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Test confirmed: ${widget.testName}')));
+        
+        // Navigate to PaymentMethodsScreen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PaymentMethodsScreen()),
+        );
       }
     }
   }

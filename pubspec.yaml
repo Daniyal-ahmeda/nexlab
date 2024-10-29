@@ -30,11 +30,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
   
   pdf: ^3.3.0
   printing: ^5.9.0
     
   flutter_launcher_icons: ^0.14.1
+  image_picker: ^0.8.4+4
   
   font_awesome_flutter: ^10.1.0 # Check for the latest version on pub.dev
 
@@ -62,21 +66,17 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - Assets/Diabetes.png
-    - Assets/Traglestride.png
-    - Assets/Sample test.png
-    - Assets/Phnmounia.png
-    - Assets/Lung.png
-    - Assets/Liver test.png
-    - Assets/HIV.png
-    - Assets/Heart.png
-    - Assets/Genetics.png
-    - Assets/Drug test.png
-    - Assets/Covid 19.png
-    - Assets/BPH.png
-    - Assets/Bacteria.png
-    - Assets/Allergies.png
-    - Assets/Nexlab logo.png
+    - Assets/Edfaly.png
+    - Assets/Visa Card2.png
+    - Assets/mobi2.png
+    - Assets/Nexlab_logo.png
+    - Assets/profile.jpg
+    - Assets/Cash.jpg
+    - Assets/lang/ar.json
+    - Assets/lang/en.json
+    - Assets/lab1.jpg
+    - Assets/lab2.jpg
+    - Assets/lab3.jpg
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -4,6 +4,7 @@ import 'package:nex_lab/models/test_report.dart';
 import 'package:nex_lab/screens/inhome_screens/bookedtests_screen.dart';
 import 'package:nex_lab/screens/inhome_screens/tests_sceen.dart';
 import 'package:nex_lab/screens/result_screen.dart';
+import 'package:nex_lab/screens/profile_screens/profile_screen.dart';  // Import ProfileScreen
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,12 +27,18 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade50,
-        title: Image.asset('Assets/Nexlab logo.png', width: 189, height: 33, fit: BoxFit.contain),
+        title: Image.asset('Assets/Nexlab_logo.png', width: 189, height: 33, fit: BoxFit.contain),
         actions: [Icon(Icons.notifications, color: Colors.black, size: 40)],
         centerTitle: true,
         elevation: 0,
@@ -56,62 +63,59 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: _selectedIndex == 1
-          ? Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: ['Tests', 'Booked Tests'].asMap().entries.map((entry) {
-                    int index = entry.key;
-                    String title = entry.value;
-                    return GestureDetector(
-                      onTap: () => setState(() => _currentSwappableIndex = index),
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: _currentSwappableIndex == index ? Colors.blue.withOpacity(0.5) : Color(0x79FFFFFF),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            title,
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              color: _currentSwappableIndex == index ? Colors.white : Colors.black,
+      body: _selectedIndex == 0
+          ? ResultsScreen(testReports: testReports)
+          : _selectedIndex == 1
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: ['Tests', 'Booked Tests'].asMap().entries.map((entry) {
+                        int index = entry.key;
+                        String title = entry.value;
+                        return GestureDetector(
+                          onTap: () => setState(() => _currentSwappableIndex = index),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: _currentSwappableIndex == index ? Colors.blue.withOpacity(0.5) : Color(0x79FFFFFF),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Text(
+                                title,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                  color: _currentSwappableIndex == index ? Colors.white : Colors.black,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        );
+                      }).toList(),
+                    ),
+                    Expanded(
+                      child: IndexedStack(
+                        index: _currentSwappableIndex,
+                        children: [
+                          Tests_Screen(onTestBooked: _bookTest),
+                          BookedTestsScreen(bookedTests: bookedTests),
+                        ],
                       ),
-                    );
-                  }).toList(),
-                ),
-                Expanded(
-                  child: IndexedStack(
-                    index: _currentSwappableIndex,
-                    children: [
-                      Tests_Screen(onTestBooked: _bookTest),
-                      BookedTestsScreen(bookedTests: bookedTests),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          : (_selectedIndex == 0
-              ? ResultsScreen(testReports: testReports)
-              : Center(child: Text('Profile Screen'))),
+                    ),
+                  ],
+                )
+              : ProfileScreen(),
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.blue,
-        unselectedItemColor: Colors.blue,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Results'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
-        onTap: (index) => setState(() {
-          _selectedIndex = index;
-        }),
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
