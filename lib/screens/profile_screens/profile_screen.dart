@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nex_lab/screens/payment/payment_screen.dart';
 import 'package:nex_lab/screens/profile_screens/about_screen.dart';
 import 'package:nex_lab/screens/profile_screens/logout_screen.dart';
 import 'package:nex_lab/screens/profile_screens/privacy_screen.dart';
-import 'settings_screen.dart'; // Import SettingsScreen
 import 'edit_profile_screen.dart'; // Import EditProfileScreen
 
 class ProfileScreen extends StatefulWidget {

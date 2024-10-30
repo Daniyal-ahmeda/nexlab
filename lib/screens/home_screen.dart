@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   int _currentSwappableIndex = 0;
   bool isDarkMode = false;
   final List<BookedTest> bookedTests = [];
