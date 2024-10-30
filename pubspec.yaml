@@ -33,13 +33,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   shared_preferences: ^2.0.6
-  
+  lottie: ^1.2.1
   
   pdf: ^3.3.0
   printing: ^5.9.0
     
   flutter_launcher_icons: ^0.14.1
   image_picker: ^0.8.4+4
+ 
   
   font_awesome_flutter: ^10.1.0 # Check for the latest version on pub.dev
 
@@ -79,6 +80,7 @@ flutter:
     - Assets/lab2.jpg
     - Assets/lab3.jpg
     - Assets/card_placeholder.jpg
+    - Assets/icon/Success (1).json
    
 
   # An image asset can refer to one or more resolution-specific "variants", see
